@@ -36,4 +36,5 @@
    }
 5. Удаление позиции в таблице по id: curl -x DELETE http://localhost:8080/api/v1/drivers/{id} 
 
-https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif)
+
