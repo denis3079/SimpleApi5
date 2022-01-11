@@ -155,5 +155,5 @@ spec.replicas: 10
 ```html
 kubectl apply -f deployment.yaml
 ```
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif)
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/deployment.bmp)
 
