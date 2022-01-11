@@ -144,7 +144,7 @@ kubectl apply -f service.yaml
 minikube start
 minikube ssh
 ```
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif)
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Minikube.bmp)
 4. Увеличение количества реплик до 10 и проверка отображение hostname.
 
 В манифесте deployment.yaml изменить количество реплик до 10:
