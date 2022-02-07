@@ -81,8 +81,7 @@ kubectl get svc
 Установите графический интерфейс Dashboard https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/ - необходимо выполнить шаги Deploying the Dashboard UI и Accessing the Dashboard UI. 
 В последнем не забудьте кликнуть по ссылке creating a sample user и выполнить там инструкции.
 
-3. Произвести деплой приложения в кластер. У приложения должны быть ендпоинты, соответствующие его предметной области, а также ендпоинт, 
-где будет отображаться
+3. Произвести деплой приложения в кластер.
 
 Создать манифест Deployment и сохранить в файл, например deployment.yaml:
 
