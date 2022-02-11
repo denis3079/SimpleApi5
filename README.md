@@ -172,11 +172,11 @@ curl http://192.168.65.2:8080/api/v1/status
 
 4. Увеличим количество реплик до 10 и проверим отображение hostname.
 
-В манифесте deployment.yaml изменить количество реплик до 10:
+В манифесте deployment.yaml изменим количество реплик до 10:
 ```html
 spec.replicas: 10
 ```
-Применить изменения:
+Применим изменения:
 ```html
 kubectl apply -f deployment.yaml
 ```
