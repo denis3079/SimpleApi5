@@ -11,20 +11,19 @@
 ------------------------------------------------------------------------------------------------------------------------------------
 Инструкция по сборке и запуску:
 
-Для работы потребуется установленная среда разработки IntelliJ IDEA 2021.3 (Ultimate Edition). А также Docker — проект для автоматизации развертывания приложений в виде переносимых автономных контейнеров, 
-выполняемых в облаке или локальной среде.
+Для работы потребуется установленная среда разработки IntelliJ IDEA 2021.3 (Ultimate Edition). А также Docker — проект для автоматизации развертывания приложений в виде переносимых автономных контейнеров, выполняемых в облаке или локальной среде. Используется операционная система Windows 10 и кроссплатформенная оболочка PowerShell.
 1. Необходимо написать код на языке JAVA используя среду разработки IntelliJ IDEA 2021.3.
-2. Запустить контейнер с базой данных Postgresql для теста приложения с помощью команды: 
+2. Запустим контейнер с базой данных Postgresql для теста приложения с помощью команды: 
 ```html 
 docker run -e POSTGRES_PASSWORD=root -p 5432:5432 postgres 
 ```
-4. Запустить файлы schema.sql, data.sql (src/main/resources/...) для создания таблиц и добавления данных в эти таблицы.
+4. Запустим файлы schema.sql, data.sql (src/main/resources/...) для создания таблиц и добавления данных в эти таблицы.
 5. С помощью сборщика проектов MAVEN необходимо собрать образ для Docker. Во вкладке Maven/SimpleApi1/Lifecycle/package по двойному клику будет создан *.jar архив.
 6. Далее необходимо произвести сборку образа: 
 ```html
 docker build . -t $IMAGE_NAME:latest
 ```
-6. Запустить созданный образ командой: 
+6. Запустим созданный образ командой: 
 ```html
 docker run -p 8080:8080 $IMAGE_NAME:latest
 ```
@@ -67,23 +66,39 @@ curl -x DELETE http://localhost:8080/api/v1/drivers/{id}
 
 --------------------------------------------------------------------------------------------------------------------------------------
 Инструкция:
-1. Развернуть локально кластер на Kubernetes с использованием MiniKube.
+1. Развернём локально кластер на Kubernetes с использованием MiniKube.
 
-Установить MiniKube по инструкции https://minikube.sigs.k8s.io/docs/start/
-Установить kubectl https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
-Убедитесь, что kubectl работает и произведите осмотрите кластера с помощью команд:
+Установим MiniKube по инструкции https://minikube.sigs.k8s.io/docs/start/
+Установим kubectl https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
+Убедимся, что kubectl работает и произведём осмотр кластера с помощью команд:
 ```yaml
 kubectl get node
 kubectl get po
 kubectl get po -A
 kubectl get svc
 ```
-Установите графический интерфейс Dashboard https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/ - необходимо выполнить шаги Deploying the Dashboard UI и Accessing the Dashboard UI. 
+Установим графический интерфейс Dashboard https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/ - необходимо выполнить шаги Deploying the Dashboard UI и Accessing the Dashboard UI. 
 В последнем не забудьте кликнуть по ссылке creating a sample user и выполнить там инструкции.
 
-3. Произвести деплой приложения в кластер.
+3. Произведём деплой приложения в кластер.
+Для того, чтобы MiniKube видел образы docker, необходимо создавать docker-образы внутри MiniKube. Для обеспечения этого, выполним команду в PowerShell:
+```html
+minikube -p minikube docker-env | Invoke-Expression 
+```
+Перейдём в папку с API в PowerShell:
+```html
+cd C:\Users\denis\IdeaProjects\SimpleApi 
+```
+Пересоберём докер образ в PowerShell:
+```html
+minikube -p minikube docker-env | Invoke-Expression 
+```
+Решеним проблему с обращением из MiniKube к приложению, либо БД на localhost. Определим локальный адресс нашей машины (https://minikube.sigs.k8s.io/docs/handbook/host-access/) - IP of localhost from MiniKube используя команду в PowerShell:
+```html
+ping host.minikube.internal
+```
 
-Создать манифест Deployment и сохранить в файл, например deployment.yaml:
+Создадим манифест Deployment и сохранить в файл, например deployment.yaml:
 
 ```yaml
     apiVersion: apps/v1
@@ -91,7 +106,7 @@ kubectl get svc
     metadata:
       name: my-deployment
     spec:
-      replicas: 2
+      replicas: 10
       selector:
         matchLabels:
           app: my-app
@@ -107,21 +122,23 @@ kubectl get svc
         spec:
           containers:
             - image: myapi:latest
+              # https://medium.com/bb-tutorials-and-thoughts/how-to-use-own-local-doker-images-with-minikube-2c1ed0b0968
+              # указыаает на то, что образы нужно брать только из локального registry. В продакшене никогда не использовать
               imagePullPolicy: Never 
               name: myapi
               ports:
                 - containerPort: 8080
           hostAliases:
-          - ip: "127.0.0.1" # The IP of localhost from MiniKube
+          - ip: "192.168.65.2" # The IP of localhost from MiniKube
             hostnames:
             - postgres.local
 ```
-Выполнить данный код командой: 
+Выполним данный код командой в PowerShell: 
 ```yaml
 kubectl apply -f deployment.yaml
 ```
 
-Создать манифест Service и сохранить в файл, например service.yaml
+Создадим манифест Service и сохранить в файл, например service.yaml
 ```yaml
     apiVersion: v1
     kind: Service
@@ -137,17 +154,23 @@ kubectl apply -f deployment.yaml
       selector:
         app: my-app
 ```
-Выполнить данный код командой: 
+Выполним данный код командой в PowerShell: 
 ```yaml
 kubectl apply -f service.yaml
 ```
-Для того, чтобы проверить доступность localhost изнутри Minikube, надо зайти внутрь Minikube путем выполнения в консоли:
+Для того, чтобы проверить доступность localhost изнутри Minikube, надо зайти внутрь Minikube путем выполнения команды в PowerShell:
 ```yaml
-minikube start
 minikube ssh
 ```
+Далее выполним в PowerShell curl к какому-нибудь нашему сервису на 192.168.65.2:
+```html
+curl http://192.168.65.2:8080/api/v1/status 
+```
+Если запрос выпоолнился, успешно, то адрес верный!
+
 ![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Minikube.bmp)
-4. Увеличение количества реплик до 10 и проверка отображение hostname.
+
+4. Увеличеним количество реплик до 10 и проверим отображение hostname.
 
 В манифесте deployment.yaml изменить количество реплик до 10:
 ```html
