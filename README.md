@@ -106,7 +106,7 @@ ping host.minikube.internal
     metadata:
       name: my-deployment
     spec:
-      replicas: 10
+      replicas: 2
       selector:
         matchLabels:
           app: my-app
