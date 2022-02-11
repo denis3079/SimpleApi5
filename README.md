@@ -168,7 +168,7 @@ curl http://192.168.65.2:8080/api/v1/status
 ```
 Если запрос выпоолнился, успешно, то адрес верный!
 
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Minikube.bmp)
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Minikube1.bmp)
 
 4. Увеличим количество реплик до 10 и проверим отображение hostname.
 
@@ -180,5 +180,5 @@ spec.replicas: 10
 ```html
 kubectl apply -f deployment.yaml
 ```
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/deployment.bmp)
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/deployment1.bmp)
 
