@@ -93,7 +93,7 @@ cd C:\Users\denis\IdeaProjects\SimpleApi
 ```html
 minikube -p minikube docker-env | Invoke-Expression 
 ```
-Решеним проблему с обращением из MiniKube к приложению, либо БД на localhost. Определим локальный адресс нашей машины (https://minikube.sigs.k8s.io/docs/handbook/host-access/) - IP of localhost from MiniKube используя команду в PowerShell:
+Решеним проблему с обращением из MiniKube к приложению, либо БД на localhost. Определим локальный адресс нашей машины, который будет вписан в манифест deployment.yaml (https://minikube.sigs.k8s.io/docs/handbook/host-access/) - IP of localhost from MiniKube используя команду в PowerShell:
 ```html
 ping host.minikube.internal
 ```
