@@ -23,7 +23,7 @@ docker run -e POSTGRES_PASSWORD=root -p 5432:5432 postgres
 ```html
 docker build . -t $IMAGE_NAME:latest
 ```
-6. Запустим созданный образ командой: 
+7. Запустим созданный образ командой: 
 ```html
 docker run -p 8080:8080 $IMAGE_NAME:latest
 ```
@@ -77,7 +77,7 @@ kubectl get po
 kubectl get po -A
 kubectl get svc
 ```
-Установим графический интерфейс Dashboard https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/ - необходимо выполнить шаги Deploying the Dashboard UI и Accessing the Dashboard UI. 
+2. Установим графический интерфейс Dashboard https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/ - необходимо выполнить шаги Deploying the Dashboard UI и Accessing the Dashboard UI. 
 В последнем не забудьте кликнуть по ссылке creating a sample user и выполнить там инструкции.
 
 3. Произведём деплой приложения в кластер.
@@ -170,7 +170,7 @@ curl http://192.168.65.2:8080/api/v1/status
 
 ![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Minikube.bmp)
 
-4. Увеличеним количество реплик до 10 и проверим отображение hostname.
+4. Увеличим количество реплик до 10 и проверим отображение hostname.
 
 В манифесте deployment.yaml изменить количество реплик до 10:
 ```html
