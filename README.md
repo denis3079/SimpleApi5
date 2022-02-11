@@ -93,7 +93,7 @@ cd C:\Users\denis\IdeaProjects\SimpleApi
 ```html
 minikube -p minikube docker-env | Invoke-Expression 
 ```
-Решеним проблему с обращением из MiniKube к приложению, либо БД на localhost. Определим локальный адресс нашей машины, который будет вписан в манифест deployment.yaml (https://minikube.sigs.k8s.io/docs/handbook/host-access/) - IP of localhost from MiniKube используя команду в PowerShell:
+Решеним проблему с обращением из MiniKube к приложению, либо БД на localhost. Определим локальный адрес нашей машины, который будет вписан в манифест deployment.yaml (https://minikube.sigs.k8s.io/docs/handbook/host-access/) - IP of localhost from MiniKube используя команду в PowerShell:
 ```html
 ping host.minikube.internal
 ```
@@ -181,4 +181,8 @@ spec.replicas: 10
 kubectl apply -f deployment.yaml
 ```
 ![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/deployment1.bmp)
+
+5. Произведём осмотр подов в графическом интерфейсе, предварительно выполнив пункт №2 данной инструкции и далее перейдём по ссылке http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/:
+
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif)
 
