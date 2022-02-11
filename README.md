@@ -184,5 +184,5 @@ kubectl apply -f deployment.yaml
 
 5. Произведём осмотр подов в графическом интерфейсе, предварительно выполнив пункт №2 данной инструкции и далее перейдём по ссылке http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/:
 
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif)
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Dashboard.gif)
 
