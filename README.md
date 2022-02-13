@@ -1,3 +1,4 @@
+[![Build Status](https://app.travis-ci.com/denis3079/SimpleApi4.svg?branch=main)](https://app.travis-ci.com/denis3079/SimpleApi4)
 # SimpleApi(Java, Spring Boot, Maven, Postgresql)
  Лабораторная работы №1: Создание микросервиса на Spring Boot с базой данных Postgresql
 ------------------------------------------------------------------------------------------------------------------------------------
