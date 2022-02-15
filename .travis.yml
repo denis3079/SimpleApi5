@@ -5,12 +5,12 @@ sudo: true
 services:
   - postgresql
   - docker
-#addons:
-#  apt:
-#    packages:
-#      - oracle-java8-installer
-#before_install:
-#  - chmod +x mvnw
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+before_install:
+  - chmod +x mvnw
 env:
   global:
     - secure: "DIZr0/EhC5kpErRHi03PuwOPpoktK5w84jEB+ts4GmNnb9PohoA+cNpRxJal81A0l3t689IAMqjQ1M02JbXrlFIX0QwzFCb8jsBIYskj9Na5YfkA85MgVQj2B6EsIjJ18QrDH1CVWVbjCgX77qLcSNQaLVwpSEyA65nrNb6FFc7DBKnVjhtebP7C6GDXLmR8nF9zxCiWrsD4wF46xEz450Un9Fljwk11RuqYkEFLYyC7OsRjw+HhOWAFIxnbcO8fb0ojE3r7D79JATWyDJPr2iBWfdJkz2yn594UlcoxzLMhkrA4hm+hgYsUyheDoDhLdXT/ySb6wR18ZpuoKHwXPcfETxAVuakrtSf47Rxn6/w6DyK1GVi6G4nYSqmYPCFY2mhuKTHdHgF6DgmjTaPpeGZYtPMjr5inT4KNNdI1fdXjxdXXLt7KuEW9ZLQtaW23uFe/sahlEXl19v+XrY2Ei8E8mPB2dk3x8cwT1gm+0EAEGBsDVA7xaFBG53cG/baqsSQ5v0K3N7lce2vPe1k83S1GQAZuTCVN+zXW4+4vHw9G2oSAmQChFV6zFZWh9aVPqnVQ+7LMzrD1X9yXklHVMVrw6kK+Eq8EmY4mmf5hTEWO1xYPm3MaeNSSoOlLQAD7fBTtOp3mme/B4Vo8VMvjDKxv/GDcyvrJaJ6mXh3Iasw="
