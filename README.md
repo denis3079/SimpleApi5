@@ -187,3 +187,5 @@ kubectl apply -f deployment.yaml
 
 ![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Dashboard.gif)
 
+Ссылка на развернутое приложение на платформе Heroku:
+https://myapi-api.herokuapp.com/api/v1/drivers
