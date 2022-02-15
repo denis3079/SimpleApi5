@@ -17,10 +17,8 @@ env:
     - secure: "SUPl4lplsC4T3suYMzcpCMRh0f73vwCg4/eCl0P2dmy+/ywH7BPKMyRUGx0ghRDgGUImKK5WV5iFJO7qOUZSjfHxgMowwnvvfPHBhfLeRufdbeN9u6F8UnFrcNichouyi1OviSndpoiyzGeQ/VOnUvQQC+2VGFrMxdGdtvUhuKBaZgLpiRqPcQT2loy4h6pU4q3LlwlvT55+5Y11w1vWuuUbjsQB0zFwbkUkJxMqgZV/1SRZabFGRuRCPBSj/26BVKQ0Hm8OzV8e7iYCLIGadgFaTu0NuMLHq8RyF2eQ2L8GoUA/UwKKg4xkv2XdDKNvfeJddCH/vO/XcgxU2L3owiWnU+iuw+CXSuiXzmkXA1+OPz9AjTKxE/yrRy9HPy5v486wQ9rSRaPHbk/oPAgsaP6CUsm7AwhzUQXSP/6JR0gwjFq55A5cKCSrzsY7EcMLX8cg/xLnjy+SFrKcWmowTFaQ1sJlHhuAr8cVejM/hWCTxZbHGRuRRkbwHRr74QVQyStFzC/SBsDJr1gLPctJlZl16e+HwGGA8S+ZTzQeYuVSi2hpoX4YMAOsn6griZCFJTbjcmeji3C9m8KkyASVx+8wMKk86rMKqieDrXVwchquKTBD/XsvWh7+XYGMB9O6ViUjT/uThEyUI8ulWRzncyBBtpe48zv2Zt0y6gHdLAI="
     - secure: "Qc1nBny6kCElGn5T6UY6KECBRXg/JTU43h6aCYBfKsAzivbIa8sSj00BLZrPOaq7wcv5m7g7VYdU+BoLjwFw3Ut6iOJ9mhs1HnD/6G6/TQlxghAmdrw9BZhF5jKuVxYzKm/HEi8/5HEUarCpnAwdF+J2CGRLlB8zgNYkMP55cUZ0HL+jHC5goQivJsMLdsnzjTgocIVGLpFhwUh0Wvu0WJdZ353pjSK5r6Gegsb8GEtYGi1qTNbFoIlhRF19sTXehcSTnYJQ2jv2a5KehKBIcb9cmOQiCWRxxcxV7czJAwpWAWrur+3vHq3/XU7oSEfQIgKnPnh/mqJ6ACVpF1UWsPhHm6zoox2uzTwXFY8914loxrMCsO/5eqctRdyX4ypKMRQmzO5TfMiUoEoLAH5igmBM0OwZhNORSNaY8YqJOPC85v5kccl/m9gvGA/++ySSWCk3P0X2SpcumF8nwu2uA8YiyH50KAJvwRhPENsXZWOm83Xq0Rnr2am6n/pvTd6Lhsh2HFin8Oz9e0lKYJHUg5pISo5ShJTMRJO8OYZcaDs6xzKLHrLC84+DdTz34Cc50PmwEQjcEnTRP1hLJRLdO+VrFNvXuCEmVwRXqGVmkV8dmOVcofDeVSINIk63OxJibXeNyKl3NPpmzt7yoPkYqabf6d9oTxfgrAB0NG00tY4="
     - COMMIT=${TRAVIS_COMMIT::7}
-
 script:
   - ./mvnw clean install -B
-
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$TRAVIS_BRANCH"; fi`
@@ -28,7 +26,6 @@ after_success:
   - docker build -t $IMAGE_NAME:latest .
   - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
   - docker push $IMAGE_NAME:$TAG
-
 deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
