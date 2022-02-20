@@ -1,4 +1,4 @@
-[![Build Status](https://app.travis-ci.com/denis3079/SimpleApi4.svg?branch=main)](https://app.travis-ci.com/denis3079/SimpleApi4)
+[![Build Status](https://app.travis-ci.com/denis3079/SimpleApi5.svg?branch=master)](https://app.travis-ci.com/denis3079/SimpleApi5)
 # SimpleApi(Java, Spring Boot, Maven, Postgresql)
  Лабораторная работы №1: Создание микросервиса на Spring Boot с базой данных Postgresql
 ------------------------------------------------------------------------------------------------------------------------------------
@@ -189,3 +189,4 @@ kubectl apply -f deployment.yaml
 
 Ссылка на развернутое приложение на платформе Heroku:
 https://myapi-api.herokuapp.com/api/v1/drivers
+![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Deploy.bmp)
