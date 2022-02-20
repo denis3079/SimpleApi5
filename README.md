@@ -57,7 +57,7 @@ curl -x POST http://localhost:8080/api/v1/drivers/
 ```html
 curl -x DELETE http://localhost:8080/api/v1/drivers/{id} 
 ```
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Api_docker.gif)
+![Alt Text](https://github.com/denis3079/SimpleApi5/blob/master/Api_docker.gif)
 -------------------------------------------------------------------------------------------------------------------------------------
  Лабораторная работы №2: Создание кластера Kubernetes и деплой приложения SimpleApi
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ curl http://192.168.65.2:8080/api/v1/status
 ```
 Если запрос выпоолнился, успешно, то адрес верный!
 
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Minikube1.bmp)
+![Alt Text](https://github.com/denis3079/SimpleApi5/blob/master/Minikube1.bmp)
 
 4. Увеличим количество реплик до 10 и проверим отображение hostname.
 
@@ -181,12 +181,67 @@ spec.replicas: 10
 ```html
 kubectl apply -f deployment.yaml
 ```
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/deployment1.bmp)
+![Alt Text](https://github.com/denis3079/SimpleApi5/blob/master/deployment1.bmp)
 
 5. Произведём осмотр подов в графическом интерфейсе, предварительно выполнив пункт №2 данной инструкции и далее перейдём по ссылке http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/:
 
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Dashboard.gif)
+![Alt Text](https://github.com/denis3079/SimpleApi5/blob/master/Dashboard.gif)
 
-Ссылка на развернутое приложение на платформе Heroku:
+6. Далее реализуем непрерывную интеграцию (Continuous Integration) посредством Travis CI для своего приложения, а также
+   непрерывную доставку (Continuous Deployment) обновлений в Heroku посредством Travis CI и DockerHUB.
+   После регистрации на http://travis-ci.com создадим в папке с приложеннием SImpleApi файл .travis.yml:
+```yaml
+dist: trusty
+jdk: oraclejdk8
+language: java
+sudo: true
+services:
+   - postgresql
+   - docker
+addons:
+   apt:
+      packages:
+         - oracle-java8-installer
+before_install:
+   - chmod +x mvnw
+env:
+   global:
+      - COMMIT=${TRAVIS_COMMIT::7}
+script:
+   - ./mvnw clean install -B
+after_success:
+   - docker login -u $DOCKER_USER -p $DOCKER_PASS
+   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$TRAVIS_BRANCH"; fi`
+   - export IMAGE_NAME=myapi/main-repo
+   - docker build -t $IMAGE_NAME:latest .
+   - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+   - docker push $IMAGE_NAME:$TAG
+deploy:
+   provider: heroku
+   api_key: $HEROKU_API_KEY
+   app: myapi-api
+```
+Запушим изменения в репозиторий GitHub, предварительно перейдя в папку с проектом и запустив Git Bash:
+```yaml
+git add .
+```
+```yaml
+git commit -m "<commit>"
+```
+```yaml
+git push -u git push <remote-name> master
+```
+Подключим наш репозиторий на GitHub с приложением SimpleApi к Travis CI. После чего убедимся что Travis CI их обнаружил и сделал успешную сборку.
+Зарегисрируемся на http://heroku.com и создадим там приложение с любым именем, которое потом будет отображаться в url.
+Перейдём во вкладку Resources и добавим Add-on: Heroku Postgres.
+Подключимся к созданной базе из IntelliJ IDEA. Для этого на странице, где был добавлен Add-on, 
+кликнем на появившуюся иконку Heroku Postgres, затем нажмём вкладку Settings, после чего кнопку View Credentials.
+Необходимо использовать эти параметры доступа для подключения к БД.
+Загрузим в БД схему данных из data.sql.
+7. Зарегистрируемся на http://hub.docker.com и создадим там свой репозиторий для докер образов.
+8. Перейдём на сайте в настройки нашего репозитория https://app.travis-ci.com во вкладку "Settings". 
+Добавим значения трёх переменных среды: HEROKU_API_KEY, DOCKER_USER, DOCKER_PASS.
+Далее Travis CI автоматически осуществит шифрование значений этих переменных.
+9. Ссылка на развернутое приложение на платформе Heroku:
 https://myapi-api.herokuapp.com/api/v1/drivers
-![Alt Text](https://github.com/denis3079/SimpleApi/blob/master/Deploy.bmp)
+![Alt Text](https://github.com/denis3079/SimpleApi5/blob/master/Deploy.bmp)
